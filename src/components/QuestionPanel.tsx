@@ -26,7 +26,7 @@ export function QuestionPanel({
   onComplete,
   questionsRemaining,
 }: QuestionPanelProps) {
-  const { companion, reducedMotion, ageGroup } = useGameStore();
+  const { companion, reducedMotion } = useGameStore();
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
   const [companionMessage, setCompanionMessage] = useState('');

@@ -23,8 +23,8 @@ export function GameScreen() {
     answerQuestion,
     advanceLocation,
     healHealth,
-    ageGroup,
     reducedMotion,
+    gameLength,
   } = useGameStore();
 
   const [currentQuestions, setCurrentQuestions] = useState<Question[]>([]);
@@ -64,7 +64,7 @@ export function GameScreen() {
 
       // Heal if perfect
       if (perfectLocation && companionData) {
-        const healAmount = ageGroup === 'older' ? 15 : ageGroup === 'middle' ? 15 : 10;
+        const healAmount = 15;
         healHealth(healAmount);
         setShowHealing(true);
       }
@@ -157,27 +157,13 @@ export function GameScreen() {
             {/* Progress indicator */}
             <div className="mb-6">
               <p className="text-center text-gray-600 mb-2">
-                Progress: {currentLocationIndex + 1} / {locations.length}
+                Progress: {currentLocationIndex + 1} / {gameLength}
               </p>
-              <div className="flex gap-2 justify-center">
-                {locations.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`
-                      w-4 h-4 rounded-full
-                      ${index < currentLocationIndex ? 'bg-emerald-500' : ''}
-                      ${index === currentLocationIndex ? 'bg-emerald-400 ring-2 ring-emerald-300' : ''}
-                      ${index > currentLocationIndex ? 'bg-gray-300' : ''}
-                    `}
-                    aria-label={
-                      index < currentLocationIndex
-                        ? 'Completed'
-                        : index === currentLocationIndex
-                        ? 'Current'
-                        : 'Upcoming'
-                    }
-                  />
-                ))}
+              <div className="w-full h-3 bg-gray-200 rounded-full">
+                <div
+                  className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+                  style={{ width: `${((currentLocationIndex + 1) / gameLength) * 100}%` }}
+                />
               </div>
             </div>
 
@@ -188,7 +174,7 @@ export function GameScreen() {
                          rounded-xl transition-colors duration-200
                          focus:ring-4 focus:ring-emerald-300 focus:outline-none"
             >
-              {currentLocationIndex < locations.length - 1
+              {currentLocationIndex < gameLength - 1
                 ? 'Travel to Next Location'
                 : 'Complete Journey'}
             </button>

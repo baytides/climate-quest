@@ -1,7 +1,7 @@
 'use client';
 
 import { useGameStore } from '@/store/gameStore';
-import { OnboardingAge } from '@/components/OnboardingAge';
+import { OnboardingLength } from '@/components/OnboardingLength';
 import { OnboardingCompanion } from '@/components/OnboardingCompanion';
 import { GameScreen } from '@/components/GameScreen';
 import { GameOver } from '@/components/GameOver';
@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      {phase === 'onboarding-age' && <OnboardingAge />}
+      {phase === 'onboarding-length' && <OnboardingLength />}
       {phase === 'onboarding-companion' && <OnboardingCompanion />}
       {phase === 'playing' && <GameScreen />}
       {phase === 'game-over' && <GameOver />}

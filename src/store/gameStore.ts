@@ -1,13 +1,13 @@
 import { create } from 'zustand';
 
 export type Companion = 'crab' | 'otter' | 'seal' | 'pelican';
-export type AgeGroup = 'young' | 'middle' | 'older';
-export type GamePhase = 'onboarding-age' | 'onboarding-companion' | 'playing' | 'game-over' | 'victory';
+export type GamePhase = 'onboarding-length' | 'onboarding-companion' | 'playing' | 'game-over' | 'victory';
+export type GameLength = 15 | 25 | 50;
 
 interface GameState {
   // Player profile
-  ageGroup: AgeGroup | null;
   companion: Companion | null;
+  gameLength: GameLength;
 
   // Game state
   phase: GamePhase;
@@ -23,7 +23,7 @@ interface GameState {
   soundEnabled: boolean;
 
   // Actions
-  setAgeGroup: (age: AgeGroup) => void;
+  setGameLength: (length: GameLength) => void;
   setCompanion: (companion: Companion) => void;
   startGame: () => void;
   answerQuestion: (correct: boolean) => void;
@@ -35,20 +35,21 @@ interface GameState {
   setSoundEnabled: (enabled: boolean) => void;
 }
 
-// Health settings by age group
-const HEALTH_SETTINGS: Record<AgeGroup, { start: number; damage: number; heal: number; minHealth: number }> = {
-  young: { start: 100, damage: 5, heal: 10, minHealth: 30 }, // Gentler for young kids
-  middle: { start: 100, damage: 10, heal: 15, minHealth: 0 }, // Standard
-  older: { start: 80, damage: 15, heal: 15, minHealth: 0 }, // Harder for older kids
+// Standard difficulty settings
+const HEALTH_SETTINGS = {
+  start: 100,
+  damage: 10,
+  heal: 15,
+  minHealth: 0,
 };
 
 export const useGameStore = create<GameState>((set, get) => ({
   // Initial state
-  ageGroup: null,
   companion: null,
-  phase: 'onboarding-age',
-  health: 100,
-  maxHealth: 100,
+  gameLength: 25,
+  phase: 'onboarding-length',
+  health: HEALTH_SETTINGS.start,
+  maxHealth: HEALTH_SETTINGS.start,
   currentLocationIndex: 0,
   questionsAnswered: 0,
   correctAnswers: 0,
@@ -56,14 +57,8 @@ export const useGameStore = create<GameState>((set, get) => ({
   highContrast: false,
   soundEnabled: true,
 
-  setAgeGroup: (age) => {
-    const settings = HEALTH_SETTINGS[age];
-    set({
-      ageGroup: age,
-      health: settings.start,
-      maxHealth: settings.start,
-      phase: 'onboarding-companion',
-    });
+  setGameLength: (length) => {
+    set({ gameLength: length, phase: 'onboarding-companion' });
   },
 
   setCompanion: (companion) => {
@@ -76,7 +71,6 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   answerQuestion: (correct) => {
     const state = get();
-    const settings = HEALTH_SETTINGS[state.ageGroup || 'middle'];
 
     if (correct) {
       set({
@@ -84,7 +78,7 @@ export const useGameStore = create<GameState>((set, get) => ({
         correctAnswers: state.correctAnswers + 1,
       });
     } else {
-      const newHealth = Math.max(settings.minHealth, state.health - settings.damage);
+      const newHealth = Math.max(HEALTH_SETTINGS.minHealth, state.health - HEALTH_SETTINGS.damage);
       set({
         questionsAnswered: state.questionsAnswered + 1,
         health: newHealth,
@@ -97,8 +91,7 @@ export const useGameStore = create<GameState>((set, get) => ({
     const state = get();
     const newIndex = state.currentLocationIndex + 1;
 
-    // 5 locations total (0-4), victory after completing last
-    if (newIndex >= 5) {
+    if (newIndex >= state.gameLength) {
       set({ phase: 'victory' });
     } else {
       set({ currentLocationIndex: newIndex });
@@ -113,11 +106,11 @@ export const useGameStore = create<GameState>((set, get) => ({
 
   resetGame: () => {
     set({
-      ageGroup: null,
       companion: null,
-      phase: 'onboarding-age',
-      health: 100,
-      maxHealth: 100,
+      gameLength: 25,
+      phase: 'onboarding-length',
+      health: HEALTH_SETTINGS.start,
+      maxHealth: HEALTH_SETTINGS.start,
       currentLocationIndex: 0,
       questionsAnswered: 0,
       correctAnswers: 0,
