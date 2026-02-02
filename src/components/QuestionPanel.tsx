@@ -5,7 +5,13 @@ import { motion } from 'framer-motion';
 import { useGameStore } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
 import type { Question } from '@/data/locations';
-import Image from 'next/image';
+
+const COMPANION_EMOJI: Record<string, string> = {
+  crab: '🦀',
+  otter: '🦦',
+  seal: '🦭',
+  pelican: '🐦',
+};
 
 interface QuestionPanelProps {
   question: Question;
@@ -215,15 +221,11 @@ export function QuestionPanel({
           </div>
 
           {/* Companion reaction */}
-          {companionData && companionMessage && (
+          {companionData && companionMessage && companion && (
             <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
-              <Image
-                src={`/assets/game/companion-${companion}.svg`}
-                alt={companionData.name}
-                width={40}
-                height={40}
-                className="flex-shrink-0"
-              />
+              <span className="text-3xl flex-shrink-0" aria-hidden="true">
+                {COMPANION_EMOJI[companion]}
+              </span>
               <div>
                 <p className="font-medium text-gray-800">{companionData.name}:</p>
                 <p className="text-gray-600">{companionMessage}</p>

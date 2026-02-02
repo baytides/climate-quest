@@ -2,11 +2,17 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useGameStore, type Companion } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
 
 const companionList = Object.values(companions);
+
+const COMPANION_EMOJI: Record<string, string> = {
+  crab: '🦀',
+  otter: '🦦',
+  seal: '🦭',
+  pelican: '🐦',
+};
 
 export function OnboardingCompanion() {
   const { setCompanion, startGame, reducedMotion } = useGameStore();
@@ -81,14 +87,9 @@ export function OnboardingCompanion() {
               tabIndex={0}
             >
               <div className="aspect-square relative mb-3 flex items-center justify-center">
-                <Image
-                  src={`/assets/game/companion-${companion.id}.svg`}
-                  alt=""
-                  width={80}
-                  height={80}
-                  className="drop-shadow-md"
-                  aria-hidden="true"
-                />
+                <span className="text-6xl" aria-hidden="true">
+                  {COMPANION_EMOJI[companion.id]}
+                </span>
               </div>
               <h3 className="font-bold text-gray-800 text-lg">
                 {companion.name}
@@ -113,13 +114,9 @@ export function OnboardingCompanion() {
             aria-live="polite"
           >
             <div className="flex items-start gap-4">
-              <Image
-                src={`/assets/game/companion-${selectedCompanion}.svg`}
-                alt={companions[selectedCompanion].name}
-                width={48}
-                height={48}
-                className="flex-shrink-0"
-              />
+              <span className="text-5xl flex-shrink-0" aria-hidden="true">
+                {COMPANION_EMOJI[selectedCompanion]}
+              </span>
               <div>
                 <p className="font-medium text-emerald-800">
                   {companions[selectedCompanion].name} says:

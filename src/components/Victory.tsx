@@ -1,9 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useGameStore } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
+
+const COMPANION_EMOJI: Record<string, string> = {
+  crab: '🦀',
+  otter: '🦦',
+  seal: '🦭',
+  pelican: '🐦',
+};
 
 export function Victory() {
   const {
@@ -96,7 +102,7 @@ export function Victory() {
         </div>
 
         {/* Companion celebration */}
-        {companionData && (
+        {companionData && companion && (
           <motion.div
             initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -104,13 +110,9 @@ export function Victory() {
             className="bg-yellow-50 rounded-xl p-4 mb-6 border border-yellow-200"
           >
             <div className="flex items-start gap-3 text-left">
-              <Image
-                src={`/assets/game/companion-${companion}.svg`}
-                alt={companionData.name}
-                width={48}
-                height={48}
-                className="flex-shrink-0"
-              />
+              <span className="text-4xl flex-shrink-0" aria-hidden="true">
+                {COMPANION_EMOJI[companion]}
+              </span>
               <div>
                 <p className="font-medium text-yellow-800">{companionData.name}:</p>
                 <p className="text-yellow-700">

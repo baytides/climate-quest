@@ -1,9 +1,15 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { useGameStore } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
+
+const COMPANION_EMOJI: Record<string, string> = {
+  crab: '🦀',
+  otter: '🦦',
+  seal: '🦭',
+  pelican: '🐦',
+};
 
 export function GameOver() {
   const {
@@ -65,16 +71,12 @@ export function GameOver() {
         </div>
 
         {/* Companion message */}
-        {companionData && (
+        {companionData && companion && (
           <div className="bg-amber-50 rounded-xl p-4 mb-6 border border-amber-200">
             <div className="flex items-start gap-3 text-left">
-              <Image
-                src={`/assets/game/companion-${companion}.svg`}
-                alt={companionData.name}
-                width={48}
-                height={48}
-                className="flex-shrink-0"
-              />
+              <span className="text-4xl flex-shrink-0" aria-hidden="true">
+                {COMPANION_EMOJI[companion]}
+              </span>
               <div>
                 <p className="font-medium text-amber-800">{companionData.name}:</p>
                 <p className="text-amber-700">

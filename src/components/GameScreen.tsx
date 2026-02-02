@@ -1,21 +1,20 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useGameStore } from '@/store/gameStore';
 import { HealthMeter } from './HealthMeter';
 import { QuestionPanel } from './QuestionPanel';
+import { GameMap } from './GameMap';
 import { locations, getRandomQuestions, type Question } from '@/data/locations';
 import { companions, getRandomMessage } from '@/data/companions';
-import { EventBus } from '@/game/EventBus';
-import Image from 'next/image';
 
-// Dynamic import for Phaser (client-side only)
-const PhaserGame = dynamic(
-  () => import('@/game/PhaserGame').then((mod) => mod.PhaserGame),
-  { ssr: false }
-);
+const COMPANION_EMOJI: Record<string, string> = {
+  crab: '🦀',
+  otter: '🦦',
+  seal: '🦭',
+  pelican: '🐦',
+};
 
 export function GameScreen() {
   const {
@@ -26,8 +25,6 @@ export function GameScreen() {
     healHealth,
     ageGroup,
     reducedMotion,
-    health,
-    maxHealth,
   } = useGameStore();
 
   const [currentQuestions, setCurrentQuestions] = useState<Question[]>([]);
@@ -50,13 +47,6 @@ export function GameScreen() {
       setShowHealing(false);
     }
   }, [currentLocation]);
-
-  // Notify Phaser of companion change
-  useEffect(() => {
-    if (companion) {
-      EventBus.emit('set-companion', companion);
-    }
-  }, [companion]);
 
   const handleAnswer = (correct: boolean) => {
     answerQuestion(correct);
@@ -83,22 +73,15 @@ export function GameScreen() {
 
   const handleAdvanceLocation = () => {
     advanceLocation();
-    EventBus.emit('advance-location');
   };
 
   const currentQuestion = currentQuestions[currentQuestionIndex];
 
   return (
     <div className="min-h-screen bg-gray-100 flex">
-      {/* Left side: Game canvas (70%) */}
-      <div className="w-[70%] h-screen relative bg-slate-900">
-        <PhaserGame />
-
-        {/* Location indicator overlay */}
-        <div className="absolute top-4 left-4 bg-white/90 rounded-xl px-4 py-2 shadow-lg">
-          <p className="text-sm text-gray-500">Current Location</p>
-          <p className="font-bold text-gray-800">{currentLocation?.name}</p>
-        </div>
+      {/* Left side: Game map (70%) */}
+      <div className="w-[70%] h-screen p-4">
+        <GameMap />
       </div>
 
       {/* Right side: UI panel (30%) */}
@@ -115,13 +98,10 @@ export function GameScreen() {
         {/* Location info */}
         <div className="bg-white rounded-xl shadow p-4 mb-6">
           <div className="flex items-center gap-3 mb-3">
-            {companionData && (
-              <Image
-                src={`/assets/game/companion-${companion}.svg`}
-                alt={companionData.name}
-                width={40}
-                height={40}
-              />
+            {companion && (
+              <span className="text-3xl" aria-hidden="true">
+                {COMPANION_EMOJI[companion]}
+              </span>
             )}
             <div>
               <h2 className="font-bold text-gray-800">{currentLocation?.name}</h2>
@@ -159,12 +139,9 @@ export function GameScreen() {
                 aria-live="polite"
               >
                 <div className="flex items-start gap-3">
-                  <Image
-                    src={`/assets/game/companion-${companion}.svg`}
-                    alt={companionData.name}
-                    width={48}
-                    height={48}
-                  />
+                  <span className="text-4xl" aria-hidden="true">
+                    {companion && COMPANION_EMOJI[companion]}
+                  </span>
                   <div>
                     <p className="font-bold text-emerald-700">
                       Perfect! Ecosystem healed!
