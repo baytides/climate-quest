@@ -1,0 +1,13 @@
+[
+  {
+    "locationId": "sandy-shores",
+    "title": "Sandy Shores",
+    "summary": "Beaches are dynamic systems shaped by waves and storms.",
+    "keyTakeaway": "Natural hazards can change ecosystems, and smart actions can reduce harm.",
+    "tags": {
+      "ngss": ["4-ESS3-1"],
+      "epc": ["Principle II"],
+      "topic": ["hazards"]
+    }
+  }
+]

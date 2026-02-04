@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore, type Companion } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
+import { playSfx } from '@/utils/sfx';
 
 const companionList = Object.values(companions);
 
@@ -20,6 +21,7 @@ export function OnboardingCompanion() {
   const [greeting, setGreeting] = useState<string>('');
 
   const handleSelect = (id: Companion) => {
+    playSfx('click');
     setSelectedCompanion(id);
     const companion = companions[id];
     setGreeting(getRandomMessage(companion, 'greetings'));
@@ -27,6 +29,7 @@ export function OnboardingCompanion() {
 
   const handleConfirm = () => {
     if (selectedCompanion) {
+      playSfx('confirm');
       setCompanion(selectedCompanion);
       startGame();
     }
@@ -40,22 +43,22 @@ export function OnboardingCompanion() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-sky-400 to-emerald-400 flex flex-col items-center justify-center p-8">
+    <div className="min-h-screen flex flex-col items-center justify-center p-6 md:p-10">
       <motion.div
         initial={reducedMotion ? {} : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white/95 rounded-2xl shadow-2xl p-8 max-w-4xl w-full"
+        className="ui-panel p-8 md:p-10 max-w-5xl w-full"
         role="region"
         aria-labelledby="companion-heading"
       >
         <h1
           id="companion-heading"
-          className="text-3xl font-bold text-gray-800 text-center mb-2"
+          className="ui-title text-3xl md:text-4xl font-bold text-[color:var(--ink)] text-center mb-2"
         >
           Choose Your Companion
         </h1>
-        <p className="text-gray-600 text-center mb-8">
+        <p className="text-[color:var(--ink-soft)] text-center mb-8">
           Your companion will guide you through the journey and help when things get tough.
         </p>
 
@@ -73,12 +76,12 @@ export function OnboardingCompanion() {
               onClick={() => handleSelect(companion.id)}
               onKeyDown={(e) => handleKeyDown(e, companion.id)}
               className={`
-                p-4 rounded-xl border-3 transition-all duration-200
-                focus:ring-4 focus:ring-emerald-200 focus:outline-none
+                ui-card p-4 border-2 transition-all duration-200
+                focus:outline-none
                 ${
                   selectedCompanion === companion.id
-                    ? 'border-emerald-500 bg-emerald-50 shadow-lg scale-105'
-                    : 'border-gray-200 hover:border-emerald-300 bg-white hover:bg-gray-50'
+                    ? 'border-[color:var(--sun)] bg-[color:var(--sand)] scale-105'
+                    : 'border-transparent hover:border-[color:var(--ocean)]'
                 }
               `}
               role="radio"
@@ -91,13 +94,13 @@ export function OnboardingCompanion() {
                   {COMPANION_EMOJI[companion.id]}
                 </span>
               </div>
-              <h3 className="font-bold text-gray-800 text-lg">
+              <h3 className="font-bold text-[color:var(--ink)] text-lg">
                 {companion.name}
               </h3>
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-[color:var(--ink-soft)]">
                 {companion.species}
               </p>
-              <p className="text-xs text-gray-400 mt-1">
+              <p className="text-xs text-[color:var(--ink-soft)]/80 mt-1">
                 {companion.personality}
               </p>
             </motion.button>
@@ -109,7 +112,7 @@ export function OnboardingCompanion() {
           <motion.div
             initial={reducedMotion ? {} : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="bg-emerald-50 rounded-xl p-6 mb-8 border-2 border-emerald-200"
+            className="ui-card p-6 mb-8"
             role="status"
             aria-live="polite"
           >
@@ -118,10 +121,10 @@ export function OnboardingCompanion() {
                 {COMPANION_EMOJI[selectedCompanion]}
               </span>
               <div>
-                <p className="font-medium text-emerald-800">
+                <p className="font-medium text-[color:var(--ocean)]">
                   {companions[selectedCompanion].name} says:
                 </p>
-                <p className="text-emerald-700 text-lg mt-1">
+                <p className="text-[color:var(--ink)] text-lg mt-1">
                   {greeting}
                 </p>
               </div>
@@ -135,12 +138,12 @@ export function OnboardingCompanion() {
             onClick={handleConfirm}
             disabled={!selectedCompanion}
             className={`
-              px-8 py-4 rounded-xl font-bold text-xl transition-all duration-200
-              focus:ring-4 focus:ring-emerald-300 focus:outline-none
+              ui-button px-8 py-4 text-xl transition-all duration-200
+              focus:outline-none
               ${
                 selectedCompanion
-                  ? 'bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg hover:shadow-xl'
-                  : 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                  ? 'bg-[color:var(--forest)] text-white'
+                  : 'bg-[color:var(--sand)] text-[color:var(--ink-soft)] cursor-not-allowed'
               }
             `}
             aria-disabled={!selectedCompanion}

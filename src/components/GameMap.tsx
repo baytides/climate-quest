@@ -39,6 +39,8 @@ export function GameMap({ onLocationClick }: GameMapProps) {
   const visibleLocations = locations.slice(0, gameLength);
   const currentLocation = visibleLocations[currentLocationIndex];
   const currentEcosystem = currentLocation?.ecosystem || 'coastal';
+  const mapWidth = Math.max(visibleLocations.length * 120, 800);
+  const mapHeight = 220;
 
   // Auto-scroll to keep current location visible
   useEffect(() => {
@@ -50,14 +52,9 @@ export function GameMap({ onLocationClick }: GameMapProps) {
     }
   }, [currentLocationIndex]);
 
-  // Group locations by ecosystem for visual regions
-  const getEcosystemRegion = (index: number): string => {
-    return visibleLocations[index]?.ecosystem || 'coastal';
-  };
-
   return (
     <div
-      className="relative w-full h-full overflow-hidden rounded-xl"
+      className="relative w-full h-full overflow-hidden rounded-3xl border border-white/60 shadow-[0_30px_80px_rgba(14,42,43,0.25)]"
       style={{ background: REGION_BACKGROUNDS[currentEcosystem] }}
       role="img"
       aria-label="Game map showing your journey through different ecosystems"
@@ -77,16 +74,19 @@ export function GameMap({ onLocationClick }: GameMapProps) {
       >
         <div
           className="relative h-full flex items-center"
-          style={{ width: `${Math.max(visibleLocations.length * 120, 800)}px`, paddingLeft: '60px', paddingRight: '60px' }}
+          style={{ width: `${mapWidth}px`, paddingLeft: '60px', paddingRight: '60px' }}
         >
           {/* Path line */}
           <svg
             className="absolute inset-0 w-full h-full pointer-events-none"
             preserveAspectRatio="none"
+            viewBox={`0 0 ${mapWidth} ${mapHeight}`}
             aria-hidden="true"
           >
             <path
-              d={`M 60,50% ${visibleLocations.map((_, i) => `L ${60 + i * 120},${50 + Math.sin(i * 0.5) * 15}%`).join(' ')}`}
+              d={`M 60,110 ${visibleLocations
+                .map((_, i) => `L ${60 + i * 120},${110 + Math.sin(i * 0.5) * 18}`)
+                .join(' ')}`}
               fill="none"
               stroke="#8B4513"
               strokeWidth="4"
@@ -176,12 +176,12 @@ export function GameMap({ onLocationClick }: GameMapProps) {
 
       {/* Progress indicator */}
       <div className="absolute bottom-4 left-4 bg-white/90 rounded-lg px-3 py-2 shadow">
-        <p className="text-sm font-medium text-gray-700">
+        <p className="text-sm font-medium text-[color:var(--ink)]">
           Location {currentLocationIndex + 1} of {gameLength}
         </p>
-        <div className="w-32 h-2 bg-gray-200 rounded-full mt-1">
+        <div className="w-32 h-2 bg-[color:var(--sand)] rounded-full mt-1">
           <div
-            className="h-full bg-emerald-500 rounded-full transition-all duration-500"
+            className="h-full bg-[color:var(--ocean)] rounded-full transition-all duration-500"
             style={{ width: `${((currentLocationIndex + 1) / gameLength) * 100}%` }}
           />
         </div>
@@ -189,8 +189,8 @@ export function GameMap({ onLocationClick }: GameMapProps) {
 
       {/* Ecosystem indicator */}
       <div className="absolute bottom-4 right-4 bg-white/90 rounded-lg px-3 py-2 shadow">
-        <p className="text-xs text-gray-500">Current Region</p>
-        <p className="text-sm font-bold flex items-center gap-1">
+        <p className="text-xs text-[color:var(--ink-soft)]">Current Region</p>
+        <p className="text-sm font-bold flex items-center gap-1 text-[color:var(--ink)]">
           <span>{ecosystemThemes[currentEcosystem]?.icon}</span>
           <span className="capitalize">{currentEcosystem}</span>
         </p>

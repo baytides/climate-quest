@@ -40,12 +40,12 @@ export function Victory() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-400 to-sky-400 flex items-center justify-center p-8">
+    <div className="min-h-screen flex items-center justify-center p-6 md:p-10">
       <motion.div
         initial={reducedMotion ? {} : { opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full text-center"
+        className="ui-panel p-8 max-w-lg w-full text-center"
         role="alertdialog"
         aria-labelledby="victory-title"
         aria-describedby="victory-desc"
@@ -57,20 +57,20 @@ export function Victory() {
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="mb-6"
         >
-          <div className="w-24 h-24 mx-auto bg-emerald-100 rounded-full flex items-center justify-center">
+          <div className="w-24 h-24 mx-auto bg-[color:var(--sand)] rounded-full flex items-center justify-center">
             <span className="text-5xl" aria-hidden="true">🌍✨</span>
           </div>
         </motion.div>
 
         <h1
           id="victory-title"
-          className="text-3xl font-bold text-gray-800 mb-2"
+          className="ui-title text-3xl font-bold text-[color:var(--ink)] mb-2"
         >
           Journey Complete!
         </h1>
         <p
           id="victory-desc"
-          className="text-gray-600 mb-2"
+          className="text-[color:var(--ink-soft)] mb-2"
         >
           You saved the ecosystem!
         </p>
@@ -80,23 +80,23 @@ export function Victory() {
           <p className="text-4xl mb-1" aria-label={`Rating: ${rating.length} stars`}>
             {rating}
           </p>
-          <p className="text-lg font-medium text-emerald-600">{ratingText}</p>
+          <p className="text-lg font-medium text-[color:var(--forest)]">{ratingText}</p>
         </div>
 
         {/* Stats */}
-        <div className="bg-emerald-50 rounded-xl p-4 mb-6">
+        <div className="ui-card p-4 mb-6">
           <div className="grid grid-cols-3 gap-4">
             <div>
-              <p className="text-2xl font-bold text-gray-800">{questionsAnswered}</p>
-              <p className="text-xs text-gray-500">Questions</p>
+              <p className="text-2xl font-bold text-[color:var(--ink)]">{questionsAnswered}</p>
+              <p className="text-xs text-[color:var(--ink-soft)]">Questions</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-emerald-600">{accuracy}%</p>
-              <p className="text-xs text-gray-500">Accuracy</p>
+              <p className="text-2xl font-bold text-[color:var(--forest)]">{accuracy}%</p>
+              <p className="text-xs text-[color:var(--ink-soft)]">Accuracy</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-sky-600">{healthPercent}%</p>
-              <p className="text-xs text-gray-500">Final Health</p>
+              <p className="text-2xl font-bold text-[color:var(--ocean)]">{healthPercent}%</p>
+              <p className="text-xs text-[color:var(--ink-soft)]">Final Health</p>
             </div>
           </div>
         </div>
@@ -107,15 +107,15 @@ export function Victory() {
             initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="bg-yellow-50 rounded-xl p-4 mb-6 border border-yellow-200"
+            className="ui-card p-4 mb-6"
           >
             <div className="flex items-start gap-3 text-left">
               <span className="text-4xl flex-shrink-0" aria-hidden="true">
                 {COMPANION_EMOJI[companion]}
               </span>
               <div>
-                <p className="font-medium text-yellow-800">{companionData.name}:</p>
-                <p className="text-yellow-700">
+                <p className="font-medium text-[color:var(--ocean)]">{companionData.name}:</p>
+                <p className="text-[color:var(--ink)]">
                   {getRandomMessage(companionData, 'victoryMessages')}
                 </p>
               </div>
@@ -126,9 +126,7 @@ export function Victory() {
         {/* Play again button */}
         <button
           onClick={resetGame}
-          className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold
-                     rounded-xl transition-colors duration-200
-                     focus:ring-4 focus:ring-emerald-300 focus:outline-none"
+          className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
           autoFocus
         >
           Play Again

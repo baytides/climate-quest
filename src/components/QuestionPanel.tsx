@@ -4,7 +4,8 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useGameStore } from '@/store/gameStore';
 import { companions, getRandomMessage } from '@/data/companions';
-import type { Question } from '@/data/locations';
+import type { QuestionLike } from '@/types/questions';
+import { playSfx } from '@/utils/sfx';
 
 const COMPANION_EMOJI: Record<string, string> = {
   crab: '🦀',
@@ -14,7 +15,7 @@ const COMPANION_EMOJI: Record<string, string> = {
 };
 
 interface QuestionPanelProps {
-  question: Question;
+  question: QuestionLike;
   onAnswer: (correct: boolean) => void;
   onComplete: () => void;
   questionsRemaining: number;
@@ -53,6 +54,7 @@ export function QuestionPanel({
 
     setSelectedAnswer(index);
     const isCorrect = index === question.correctIndex;
+    playSfx(isCorrect ? 'success' : 'deny');
 
     // Get companion reaction
     if (companionData) {
@@ -65,6 +67,7 @@ export function QuestionPanel({
   };
 
   const handleContinue = () => {
+    playSfx('confirm');
     if (questionsRemaining <= 1) {
       onComplete();
     } else {
@@ -82,18 +85,18 @@ export function QuestionPanel({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6">
+    <div className="ui-card p-6">
       {/* Question header */}
       <div className="flex items-center justify-between mb-4">
-        <span className="text-sm font-medium text-gray-500">
+        <span className="text-sm font-medium text-[color:var(--ink-soft)]">
           {questionsRemaining} question{questionsRemaining !== 1 ? 's' : ''} remaining
         </span>
         <span
           className={`
-            px-3 py-1 rounded-full text-sm font-medium
-            ${question.difficulty === 'easy' ? 'bg-green-100 text-green-700' : ''}
-            ${question.difficulty === 'medium' ? 'bg-yellow-100 text-yellow-700' : ''}
-            ${question.difficulty === 'hard' ? 'bg-red-100 text-red-700' : ''}
+            ui-chip
+            ${question.difficulty === 'easy' ? 'bg-[color:var(--sand)] text-[color:var(--forest)]' : ''}
+            ${question.difficulty === 'medium' ? 'bg-[color:var(--sun)]/30 text-[color:var(--ink)]' : ''}
+            ${question.difficulty === 'hard' ? 'bg-[color:var(--rose)]/20 text-[color:var(--clay)]' : ''}
           `}
         >
           {question.difficulty}
@@ -102,7 +105,7 @@ export function QuestionPanel({
 
       {/* Question text */}
       <h2
-        className="text-xl font-bold text-gray-800 mb-6"
+        className="ui-title text-xl font-bold text-[color:var(--ink)] mb-6"
         id="question-text"
       >
         {question.question}
@@ -119,17 +122,17 @@ export function QuestionPanel({
           const isCorrect = index === question.correctIndex;
           const showCorrectness = showResult;
 
-          let buttonClass = 'border-gray-200 bg-white hover:border-emerald-400 hover:bg-emerald-50';
+          let buttonClass = 'border-transparent bg-white hover:border-[color:var(--ocean)] hover:bg-[color:var(--sand)]';
           if (showCorrectness) {
             if (isCorrect) {
-              buttonClass = 'border-green-500 bg-green-50';
+              buttonClass = 'border-[color:var(--forest)] bg-[color:var(--sand)]';
             } else if (isSelected && !isCorrect) {
-              buttonClass = 'border-red-500 bg-red-50';
+              buttonClass = 'border-[color:var(--rose)] bg-[color:var(--rose)]/10';
             } else {
-              buttonClass = 'border-gray-200 bg-gray-50 opacity-60';
+              buttonClass = 'border-transparent bg-[color:var(--cream)] opacity-60';
             }
           } else if (isSelected) {
-            buttonClass = 'border-emerald-500 bg-emerald-50';
+            buttonClass = 'border-[color:var(--sun)] bg-[color:var(--sand)]';
           }
 
           return (
@@ -142,8 +145,8 @@ export function QuestionPanel({
               onKeyDown={(e) => handleKeyDown(e, index)}
               disabled={showResult}
               className={`
-                w-full p-4 rounded-xl border-2 text-left transition-all duration-200
-                focus:ring-4 focus:ring-emerald-200 focus:outline-none
+                w-full p-4 rounded-2xl border-2 text-left transition-all duration-200
+                focus:outline-none
                 ${buttonClass}
                 ${showResult ? 'cursor-default' : 'cursor-pointer'}
               `}
@@ -155,10 +158,10 @@ export function QuestionPanel({
                 <span
                   className={`
                     w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm
-                    ${showCorrectness && isCorrect ? 'bg-green-500 text-white' : ''}
-                    ${showCorrectness && isSelected && !isCorrect ? 'bg-red-500 text-white' : ''}
-                    ${!showCorrectness ? 'bg-gray-200 text-gray-600' : ''}
-                    ${showCorrectness && !isSelected && !isCorrect ? 'bg-gray-200 text-gray-400' : ''}
+                    ${showCorrectness && isCorrect ? 'bg-[color:var(--forest)] text-white' : ''}
+                    ${showCorrectness && isSelected && !isCorrect ? 'bg-[color:var(--rose)] text-white' : ''}
+                    ${!showCorrectness ? 'bg-[color:var(--sand)] text-[color:var(--ink)]' : ''}
+                    ${showCorrectness && !isSelected && !isCorrect ? 'bg-[color:var(--sand)] text-[color:var(--ink-soft)]' : ''}
                   `}
                   aria-hidden="true"
                 >
@@ -167,18 +170,28 @@ export function QuestionPanel({
                 <span
                   className={`
                     flex-1
-                    ${showCorrectness && isCorrect ? 'text-green-800 font-medium' : ''}
-                    ${showCorrectness && isSelected && !isCorrect ? 'text-red-800' : ''}
-                    ${!showCorrectness || (!isSelected && !isCorrect) ? 'text-gray-700' : ''}
+                    ${showCorrectness && isCorrect ? 'text-[color:var(--forest)] font-medium' : ''}
+                    ${showCorrectness && isSelected && !isCorrect ? 'text-[color:var(--clay)]' : ''}
+                    ${!showCorrectness || (!isSelected && !isCorrect) ? 'text-[color:var(--ink)]' : ''}
                   `}
                 >
                   {answer}
                 </span>
                 {showCorrectness && isCorrect && (
-                  <span className="text-green-600 text-xl" aria-hidden="true">✓</span>
+                  <img
+                    src="/assets/kenney/ui-pack/Green/icon_checkmark.svg"
+                    alt=""
+                    aria-hidden="true"
+                    className="w-5 h-5"
+                  />
                 )}
                 {showCorrectness && isSelected && !isCorrect && (
-                  <span className="text-red-600 text-xl" aria-hidden="true">✗</span>
+                  <img
+                    src="/assets/kenney/ui-pack/Red/icon_cross.svg"
+                    alt=""
+                    aria-hidden="true"
+                    className="w-5 h-5"
+                  />
                 )}
               </div>
             </motion.button>
@@ -202,33 +215,33 @@ export function QuestionPanel({
             className={`
               p-4 rounded-xl border-2
               ${selectedAnswer === question.correctIndex
-                ? 'bg-green-50 border-green-200'
-                : 'bg-amber-50 border-amber-200'
+                ? 'bg-[color:var(--sand)] border-[color:var(--forest)]/30'
+                : 'bg-[color:var(--sun)]/15 border-[color:var(--clay)]/40'
               }
             `}
           >
             <p
               className={`
                 font-medium mb-2
-                ${selectedAnswer === question.correctIndex ? 'text-green-800' : 'text-amber-800'}
+                ${selectedAnswer === question.correctIndex ? 'text-[color:var(--forest)]' : 'text-[color:var(--clay)]'}
               `}
             >
               {selectedAnswer === question.correctIndex ? '✓ Correct!' : '✗ Not quite right'}
             </p>
-            <p className="text-gray-700">
+            <p className="text-[color:var(--ink)]">
               {question.explanation}
             </p>
           </div>
 
           {/* Companion reaction */}
           {companionData && companionMessage && companion && (
-            <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-xl">
+            <div className="flex items-start gap-3 p-4 bg-[color:var(--cream)] rounded-xl">
               <span className="text-3xl flex-shrink-0" aria-hidden="true">
                 {COMPANION_EMOJI[companion]}
               </span>
               <div>
-                <p className="font-medium text-gray-800">{companionData.name}:</p>
-                <p className="text-gray-600">{companionMessage}</p>
+                <p className="font-medium text-[color:var(--ink)]">{companionData.name}:</p>
+                <p className="text-[color:var(--ink-soft)]">{companionMessage}</p>
               </div>
             </div>
           )}
@@ -236,9 +249,7 @@ export function QuestionPanel({
           {/* Continue button */}
           <button
             onClick={handleContinue}
-            className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-bold
-                       rounded-xl transition-colors duration-200
-                       focus:ring-4 focus:ring-emerald-300 focus:outline-none"
+            className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
           >
             {questionsRemaining <= 1 ? 'Complete Location' : 'Next Question'}
           </button>

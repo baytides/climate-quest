@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "content:validate": "node scripts/validate-content.mjs",
+    "content:convert": "node scripts/convert-questions.mjs"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
     "framer-motion": "^12.29.2",
     "next": "16.1.6",
     "phaser": "^3.90.0",

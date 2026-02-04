@@ -1,0 +1,2 @@
+id,locationId,gradeBand,difficulty,question,answers,correctIndex,explanation,misconception,ngss,epc,topic
+sandy-1,sandy-shores,4-5,easy,Why do shorebirds have long beaks?,"To look pretty|To dig in sand for food|To fight predators|They are born that way",1,Long beaks help shorebirds probe deep into sand and mud to find hidden food.,Traits are for appearance rather than function.,"MS-LS1-4","Principle I","adaptation|food-webs"

@@ -37,7 +37,7 @@ export function HealthMeter() {
 
   return (
     <div
-      className={`${bgColor} rounded-xl p-4 border-2 border-gray-200`}
+      className="ui-card p-4"
       role="region"
       aria-labelledby="health-label"
     >
@@ -58,7 +58,7 @@ export function HealthMeter() {
 
       {/* Progress bar */}
       <div
-        className="h-6 bg-gray-200 rounded-full overflow-hidden"
+        className="h-6 bg-[color:var(--sand)] rounded-full overflow-hidden"
         role="progressbar"
         aria-valuenow={Math.round(percentage)}
         aria-valuemin={0}
@@ -89,11 +89,11 @@ export function HealthMeter() {
         <motion.div
           initial={reducedMotion ? {} : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mt-3 p-2 bg-red-200 rounded-lg border border-red-300"
+          className="mt-3 p-3 bg-[color:var(--rose)]/15 rounded-lg border border-[color:var(--rose)]/40"
           role="alert"
           aria-live="assertive"
         >
-          <p className="text-red-800 text-sm font-medium">
+          <p className="text-[color:var(--clay)] text-sm font-medium">
             ⚠️ Ecosystem in danger! Answer correctly to save it!
           </p>
         </motion.div>

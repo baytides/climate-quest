@@ -1,0 +1,35 @@
+[
+  {
+    "id": "sandy-shores-hazard-1",
+    "locationId": "sandy-shores",
+    "gradeBand": "4-5",
+    "type": "hazard",
+    "title": "High Tide Warning",
+    "prompt": "A strong storm is pushing waves farther up the beach.",
+    "choices": [
+      {
+        "id": "build-dunes",
+        "label": "Build a small dune barrier",
+        "outcome": "The dune reduces wave damage but uses time and energy.",
+        "effects": { "health": 5, "supplies": -5, "biodiversity": 0, "time": 1 },
+        "tags": {
+          "ngss": ["4-ESS3-2"],
+          "epc": ["Principle IV"],
+          "topic": ["hazards", "stewardship"]
+        }
+      },
+      {
+        "id": "move-nests",
+        "label": "Move bird nests inland",
+        "outcome": "Some nests are saved but birds are disturbed.",
+        "effects": { "health": -2, "supplies": 0, "biodiversity": -1, "time": 0 },
+        "tags": {
+          "ngss": ["4-ESS3-1"],
+          "epc": ["Principle III"],
+          "topic": ["hazards"]
+        }
+      }
+    ],
+    "followUpQuestionIds": ["sandy-1"]
+  }
+]
