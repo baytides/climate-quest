@@ -8,7 +8,10 @@
     "start": "next start",
     "lint": "eslint",
     "content:validate": "node scripts/validate-content.mjs",
-    "content:convert": "node scripts/convert-questions.mjs"
+    "content:convert": "npm run content:convert:questions && npm run content:convert:events && npm run content:convert:summaries",
+    "content:convert:questions": "node scripts/convert-questions.mjs",
+    "content:convert:events": "node scripts/convert-events.mjs",
+    "content:convert:summaries": "node scripts/convert-summaries.mjs"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

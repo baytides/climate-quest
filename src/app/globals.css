@@ -84,3 +84,42 @@ body {
   display: grid;
   gap: 16px;
 }
+
+.kenney-button {
+  background-image: url("/assets/kenney/ui-pack/Green/button_rectangle_depth_gloss.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: 0;
+  color: #ffffff;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+}
+
+.kenney-button--amber {
+  background-image: url("/assets/kenney/ui-pack/Yellow/button_rectangle_depth_gloss.svg");
+  color: #4b2c13;
+  text-shadow: none;
+}
+
+.kenney-card {
+  background-image: url("/assets/kenney/ui-pack/Yellow/button_rectangle_gloss.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: 0;
+  border-radius: 22px;
+}
+
+.kenney-panel {
+  background-image: url("/assets/kenney/ui-pack/Blue/button_rectangle_depth_gloss.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  border: 0;
+  border-radius: 26px;
+}
+
+.kenney-divider {
+  height: 10px;
+  background-image: url("/assets/kenney/ui-pack/Extra/divider.svg");
+  background-repeat: repeat-x;
+  background-size: auto 10px;
+  opacity: 0.5;
+}

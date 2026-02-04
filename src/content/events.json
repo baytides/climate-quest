@@ -11,25 +11,50 @@
         "id": "build-dunes",
         "label": "Build a small dune barrier",
         "outcome": "The dune reduces wave damage but uses time and energy.",
-        "effects": { "health": 5, "supplies": -5, "biodiversity": 0, "time": 1 },
+        "effects": {
+          "health": 5,
+          "supplies": -5,
+          "biodiversity": 0,
+          "time": 1
+        },
         "tags": {
-          "ngss": ["4-ESS3-2"],
-          "epc": ["Principle IV"],
-          "topic": ["hazards", "stewardship"]
+          "ngss": [
+            "4-ESS3-2"
+          ],
+          "epc": [
+            "Principle IV"
+          ],
+          "topic": [
+            "hazards",
+            "stewardship"
+          ]
         }
       },
       {
         "id": "move-nests",
         "label": "Move bird nests inland",
         "outcome": "Some nests are saved but birds are disturbed.",
-        "effects": { "health": -2, "supplies": 0, "biodiversity": -1, "time": 0 },
+        "effects": {
+          "health": -2,
+          "supplies": 0,
+          "biodiversity": -1,
+          "time": 0
+        },
         "tags": {
-          "ngss": ["4-ESS3-1"],
-          "epc": ["Principle III"],
-          "topic": ["hazards"]
+          "ngss": [
+            "4-ESS3-1"
+          ],
+          "epc": [
+            "Principle III"
+          ],
+          "topic": [
+            "hazards"
+          ]
         }
       }
     ],
-    "followUpQuestionIds": ["sandy-1"]
+    "followUpQuestionIds": [
+      "sandy-1"
+    ]
   }
 ]

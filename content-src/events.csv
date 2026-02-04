@@ -1,0 +1,2 @@
+id,locationId,gradeBand,type,title,prompt,choices,followUpQuestionIds
+sandy-shores-hazard-1,sandy-shores,4-5,hazard,High Tide Warning,A strong storm is pushing waves farther up the beach.,"build-dunes|Build a small dune barrier|The dune reduces wave damage but uses time and energy.|health:+5;supplies:-5;biodiversity:0;time:1|4-ESS3-2|Principle IV|hazards|stewardship||move-nests|Move bird nests inland|Some nests are saved but birds are disturbed.|health:-2;supplies:0;biodiversity:-1;time:0|4-ESS3-1|Principle III|hazards",sandy-1

@@ -99,7 +99,7 @@ export function GameScreen() {
 
       {/* Right side: UI panel */}
       <div
-        className="lg:w-[32%] lg:h-[calc(100vh-3rem)] overflow-y-auto ui-panel p-6"
+        className="lg:w-[32%] lg:h-[calc(100vh-3rem)] overflow-y-auto ui-panel kenney-panel p-6"
         role="main"
         id="main-content"
       >
@@ -121,8 +121,10 @@ export function GameScreen() {
           <HealthMeter />
         </div>
 
+        <div className="kenney-divider mb-6" aria-hidden="true" />
+
         {/* Location info */}
-        <div className="ui-card p-4 mb-6">
+        <div className="ui-card kenney-card p-4 mb-6">
           <div className="flex items-center gap-3 mb-3">
             {companion && (
               <span className="text-3xl" aria-hidden="true">
@@ -151,7 +153,7 @@ export function GameScreen() {
           <motion.div
             initial={reducedMotion ? {} : { opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="ui-card p-6"
+            className="ui-card kenney-card p-6"
           >
             <h3 className="text-xl font-bold text-[color:var(--ink)] mb-4 text-center">
               Location Complete!
@@ -162,7 +164,7 @@ export function GameScreen() {
               <motion.div
                 initial={reducedMotion ? {} : { opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="ui-card p-4 mb-4"
+                className="ui-card kenney-card p-4 mb-4"
                 role="status"
                 aria-live="polite"
               >
@@ -198,7 +200,7 @@ export function GameScreen() {
             {/* Next location button */}
             <button
               onClick={handleAdvanceLocation}
-              className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
+              className="ui-button kenney-button w-full py-4 transition-colors duration-200"
             >
               <span className="inline-flex items-center justify-center gap-2">
                 {currentLocationIndex < gameLength - 1
@@ -214,13 +216,13 @@ export function GameScreen() {
             </button>
           </motion.div>
         ) : (
-          <div className="ui-card p-6 text-center">
+          <div className="ui-card kenney-card p-6 text-center">
             <p className="text-[color:var(--ink-soft)]">Loading questions...</p>
           </div>
         )}
 
         {/* Accessibility controls */}
-        <div className="mt-6 p-4 ui-card">
+        <div className="mt-6 p-4 ui-card kenney-card">
           <h3 className="font-medium text-[color:var(--ink)] mb-3">Accessibility</h3>
           <div className="space-y-3">
             <label className="flex items-center gap-3 cursor-pointer">

@@ -45,7 +45,7 @@ export function Victory() {
         initial={reducedMotion ? {} : { opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="ui-panel p-8 max-w-lg w-full text-center"
+        className="ui-panel kenney-panel p-8 max-w-lg w-full text-center"
         role="alertdialog"
         aria-labelledby="victory-title"
         aria-describedby="victory-desc"
@@ -84,7 +84,7 @@ export function Victory() {
         </div>
 
         {/* Stats */}
-        <div className="ui-card p-4 mb-6">
+        <div className="ui-card kenney-card p-4 mb-6">
           <div className="grid grid-cols-3 gap-4">
             <div>
               <p className="text-2xl font-bold text-[color:var(--ink)]">{questionsAnswered}</p>
@@ -107,7 +107,7 @@ export function Victory() {
             initial={reducedMotion ? {} : { opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="ui-card p-4 mb-6"
+            className="ui-card kenney-card p-4 mb-6"
           >
             <div className="flex items-start gap-3 text-left">
               <span className="text-4xl flex-shrink-0" aria-hidden="true">
@@ -126,7 +126,7 @@ export function Victory() {
         {/* Play again button */}
         <button
           onClick={resetGame}
-          className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
+          className="ui-button kenney-button w-full py-4 transition-colors duration-200"
           autoFocus
         >
           Play Again

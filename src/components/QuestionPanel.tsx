@@ -85,7 +85,7 @@ export function QuestionPanel({
   };
 
   return (
-    <div className="ui-card p-6">
+    <div className="ui-card kenney-card p-6">
       {/* Question header */}
       <div className="flex items-center justify-between mb-4">
         <span className="text-sm font-medium text-[color:var(--ink-soft)]">
@@ -249,7 +249,7 @@ export function QuestionPanel({
           {/* Continue button */}
           <button
             onClick={handleContinue}
-            className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
+            className="ui-button kenney-button w-full py-4 transition-colors duration-200"
           >
             {questionsRemaining <= 1 ? 'Complete Location' : 'Next Question'}
           </button>

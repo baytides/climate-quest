@@ -37,7 +37,7 @@ export function HealthMeter() {
 
   return (
     <div
-      className="ui-card p-4"
+      className="ui-card kenney-card p-4"
       role="region"
       aria-labelledby="health-label"
     >

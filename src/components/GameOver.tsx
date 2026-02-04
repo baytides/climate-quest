@@ -31,7 +31,7 @@ export function GameOver() {
         initial={reducedMotion ? {} : { opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5 }}
-        className="ui-panel p-8 max-w-lg w-full text-center"
+        className="ui-panel kenney-panel p-8 max-w-lg w-full text-center"
         role="alertdialog"
         aria-labelledby="gameover-title"
         aria-describedby="gameover-desc"
@@ -57,7 +57,7 @@ export function GameOver() {
         </p>
 
         {/* Stats */}
-        <div className="ui-card p-4 mb-6">
+        <div className="ui-card kenney-card p-4 mb-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
               <p className="text-2xl font-bold text-[color:var(--ink)]">{questionsAnswered}</p>
@@ -72,7 +72,7 @@ export function GameOver() {
 
         {/* Companion message */}
         {companionData && companion && (
-          <div className="ui-card p-4 mb-6">
+          <div className="ui-card kenney-card p-4 mb-6">
             <div className="flex items-start gap-3 text-left">
               <span className="text-4xl flex-shrink-0" aria-hidden="true">
                 {COMPANION_EMOJI[companion]}
@@ -90,7 +90,7 @@ export function GameOver() {
         {/* Try again button */}
         <button
           onClick={resetGame}
-          className="ui-button w-full py-4 bg-[color:var(--forest)] text-white transition-colors duration-200"
+          className="ui-button kenney-button w-full py-4 transition-colors duration-200"
           autoFocus
         >
           Try Again

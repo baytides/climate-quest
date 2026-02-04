@@ -59,7 +59,7 @@ export function OnboardingLength() {
         initial={reducedMotion ? {} : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="ui-panel p-8 md:p-10 max-w-5xl w-full"
+        className="ui-panel kenney-panel p-8 md:p-10 max-w-5xl w-full"
         role="region"
         aria-labelledby="length-heading"
       >
@@ -93,7 +93,7 @@ export function OnboardingLength() {
               introduces new hazards, and unlocks deeper understanding.
             </p>
 
-            <div className="mt-6 ui-card p-4">
+            <div className="mt-6 ui-card kenney-card p-4">
               <p className="text-sm text-[color:var(--ink-soft)]">
                 <span className="font-semibold text-[color:var(--ink)]">Learning focus:</span> ecosystems,
                 resource limits, and human impact. Every choice shapes the landscape.
@@ -111,7 +111,7 @@ export function OnboardingLength() {
                 onClick={() => handleSelectLength(option.length)}
                 onKeyDown={(e) => handleKeyDown(e, option.length)}
                 className={`
-                  ui-card w-full p-6 text-left transition-all duration-200
+                  ui-card kenney-card w-full p-6 text-left transition-all duration-200
                   focus:outline-none hover:translate-y-[-2px]
                 `}
                 role="radio"

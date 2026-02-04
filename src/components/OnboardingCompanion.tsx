@@ -48,7 +48,7 @@ export function OnboardingCompanion() {
         initial={reducedMotion ? {} : { opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="ui-panel p-8 md:p-10 max-w-5xl w-full"
+        className="ui-panel kenney-panel p-8 md:p-10 max-w-5xl w-full"
         role="region"
         aria-labelledby="companion-heading"
       >
@@ -76,7 +76,7 @@ export function OnboardingCompanion() {
               onClick={() => handleSelect(companion.id)}
               onKeyDown={(e) => handleKeyDown(e, companion.id)}
               className={`
-                ui-card p-4 border-2 transition-all duration-200
+                ui-card kenney-card p-4 border-2 transition-all duration-200
                 focus:outline-none
                 ${
                   selectedCompanion === companion.id
@@ -112,7 +112,7 @@ export function OnboardingCompanion() {
           <motion.div
             initial={reducedMotion ? {} : { opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="ui-card p-6 mb-8"
+            className="ui-card kenney-card p-6 mb-8"
             role="status"
             aria-live="polite"
           >
@@ -138,12 +138,12 @@ export function OnboardingCompanion() {
             onClick={handleConfirm}
             disabled={!selectedCompanion}
             className={`
-              ui-button px-8 py-4 text-xl transition-all duration-200
+              ui-button kenney-button px-8 py-4 text-xl transition-all duration-200
               focus:outline-none
               ${
                 selectedCompanion
-                  ? 'bg-[color:var(--forest)] text-white'
-                  : 'bg-[color:var(--sand)] text-[color:var(--ink-soft)] cursor-not-allowed'
+                  ? ''
+                  : 'kenney-button--amber text-[color:var(--ink-soft)] cursor-not-allowed'
               }
             `}
             aria-disabled={!selectedCompanion}
